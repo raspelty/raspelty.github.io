@@ -93,5 +93,33 @@
 			<button id="frame-expand" type="button" title="Enter fullscreen"></button>
 		</div>
 		<script type="text/javascript" src="main.js" blocking="render"></script>
+		<script>
+			// Force correct title (overrides main.js)
+			(function() {
+				var correctTitle = "RASPELT Games";
+				function fixTitle() {
+					if (document.title !== correctTitle) {
+						document.title = correctTitle;
+					}
+				}
+				fixTitle();
+				setInterval(fixTitle, 100);
+				var observer = new MutationObserver(fixTitle);
+				var titleElement = document.querySelector('title');
+				if (titleElement) {
+					observer.observe(titleElement, { childList: true, characterData: true, subtree: true });
+				}
+			})();
+			
+			// Force correct favicon (overrides main.js)
+			(function() {
+				var correctIcon = "/favicon.ico";
+				var link = document.querySelector("link[rel*='icon']") || document.createElement("link");
+				link.type = "image/x-icon";
+				link.rel = "shortcut icon";
+				link.href = correctIcon;
+				document.getElementsByTagName('head')[0].appendChild(link);
+			})();
+		</script>
 	</body>
 </html>
